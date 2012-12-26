@@ -1,16 +1,22 @@
 package com.hjgauss.hjwebtools;
 
 import java.io.File;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 
 import com.hjgauss.hjwebtools.exceptions.IgnoreListNotLoaded;
 
 public class WebBuild {
 	final String BUILD_PATH = "../build";
 	
-	public void clearBuild(){
-		FileTree.deleteDirContent(new File(BUILD_PATH));
+	public void cleanBuild(){
+		try {
+			FileUtils.cleanDirectory(new File(BUILD_PATH));
+			System.out.println("cleaned build");
+		} catch (IOException e) {
+			System.out.println("cannot clean build");
+		}
 	}
 	
 	public void build(){
@@ -21,15 +27,19 @@ public class WebBuild {
 	public void buildWithParams(Filter filter){
 		if(!(new File(BUILD_PATH)).exists())
 			(new File(BUILD_PATH)).mkdir();
-		clearBuild();
+		cleanBuild();
 		
 		try {
+			File dest = null;
 			for (File source : filter.getFileList()){
-				File dest = new File(BUILD_PATH+FileTree.pathUnixStyleFakeAbsolute(source));
-				System.out.println("destination: "+dest);
-				FileUtils.copy(source, dest, );
+				dest = new File(BUILD_PATH+FileTree.pathUnixStyleFakeAbsolute(source));
+				System.out.println("exported to: "+dest);
+				FileUtils.copyFile(source, dest);
 			}
+			System.out.println("build exported correctly");
 		} catch (IgnoreListNotLoaded e) {
+			System.out.println("IgnoreList not initialized correctly");
+		} catch (IOException e){
 			e.printStackTrace();
 		}
 	}

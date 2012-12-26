@@ -43,7 +43,6 @@ public class Filter {
 	
 	public void loadRules(String rulePath){
 		loadIgnoreList(rulePath);
-		System.out.println("log list:"+ignore_list);
 	}
 
 	public static ArrayList<String> getRulesList(String rulePath){
@@ -62,7 +61,6 @@ public class Filter {
 	    		line = line.replace(" ", "");//delete spaces
 	    		if(!line.isEmpty())
 	    			rules.add(line);
-	    			System.out.print(line);
 	    	}      
 	    } catch (IOException e) {
 			e.printStackTrace();
@@ -95,7 +93,5 @@ public class Filter {
 		}
 		return false;
 	}
-	
-	
-	
+
 }
