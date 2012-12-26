@@ -63,7 +63,7 @@ public class Filter {
 	    			rules.add(line);
 	    	}      
 	    } catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("file not found: "+rulePath);
 		}
 
 		return rules;

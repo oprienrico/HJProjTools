@@ -2,6 +2,7 @@ package com.hjgauss.hjwebtools;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.commons.io.FileUtils;
 
@@ -27,11 +28,16 @@ public class WebBuild {
 	public void buildWithParams(Filter filter){
 		if(!(new File(BUILD_PATH)).exists())
 			(new File(BUILD_PATH)).mkdir();
-		cleanBuild();
+		
 		
 		try {
 			File dest = null;
-			for (File source : filter.getFileList()){
+			ArrayList<File> sourceList = filter.getFileList();
+			
+			//clean build
+			cleanBuild();
+			
+			for (File source : sourceList){
 				dest = new File(BUILD_PATH+FileTree.pathUnixStyleFakeAbsolute(source));
 				System.out.println("exported to: "+dest);
 				FileUtils.copyFile(source, dest);
