@@ -45,6 +45,13 @@ public class FileTree {
 	public static String pathUnixStyle(String path){
 		return path.replace('\\', '/');//(92, 47);
 	}
+	public static String pathUnixStyleFakeAbsolute(String path){
+		path = path.replace('\\', '/');//(92, 47);
+		if(path.startsWith("/"))
+			return path;
+		else
+			return "/"+path;
+	}
 	
 
 }

@@ -16,7 +16,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.eclipse.jgit.fnmatch.FileNameMatcher;
 import org.nbgit.util.exclude.FnMatch;
 
 
@@ -30,21 +29,12 @@ public class HjWebTools {
 			filePath = new File("test2/.hjrules");
 			
 			ArrayList<File> fileList = null;
-			String pattern = "test*";
-			String path = "test/sdfdf";
+			String pattern = "/test*";
+			String path = FileTree.pathUnixStyleFakeAbsolute(filePath.getPath());
 			//System.out.print("\n" + loadRulesList("test")+"\n");
 			//System.out.println("test : "+(new String("w/test/string").indexOf("/test/")));FileTree.pathUnixStyle(filePath.getPath())
-			long time = new Date().getTime();
-			FileNameMatcher fnmatch = new FileNameMatcher(pattern, null);
-			fnmatch.append(path);
-			Boolean flag = fnmatch.isMatch();
-			time = new Date().getTime() - time;
 			
-			System.out.println("test : "+flag + " time : "+time);
-			time = new Date().getTime();
-			flag = FnMatch.fnmatch(pattern, path);
-			time = new Date().getTime() - time;
-			System.out.println("test2 : "+flag + " time : "+time);
+			System.out.println("test2 : "+FnMatch.fnmatch(pattern, path));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
