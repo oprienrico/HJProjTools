@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import org.apache.commons.io.FileUtils;
 import org.nbgit.util.exclude.FnMatch;
 
 import com.hjgauss.hjwebtools.exceptions.IgnoreListNotLoaded;
@@ -20,9 +21,7 @@ public class Filter {
 	final static String RULES_FILE_IGNORE = ".hjignore";
 	
 	ArrayList<String> ignore_list;
-	/**
-	 * @param args
-	 */
+
 	public Filter(){
 
 	}
@@ -93,5 +92,39 @@ public class Filter {
 		}
 		return false;
 	}
+	
+	public static void createExampleRuleFolder(){
+		createExampleRuleFolder("", false);
+	}
+	public static void createExampleRuleFolder(Boolean forced){
+		createExampleRuleFolder("", forced);
+	}
+	
+	public static void createExampleRuleFolder(String rulePath, Boolean forced){
+		System.out.print(".hjrules");
+		if(!(new File(rulePath + RULES_FOLDER + "/")).exists()){
+			(new File(rulePath + RULES_FOLDER + "/")).mkdir();
+		}else{
+			if(!forced){
+				System.out.print(" already exist\n");
+				return;//rules already exists
+			}
+			try {
+				FileUtils.cleanDirectory(new File(rulePath + RULES_FOLDER + "/"));
+				System.out.print(" re ");
+			} catch (IOException e) {
+				System.out.print(" IO error\n");
+			}
+		}
 
+		try {
+			FileUtils.write(
+				new File(rulePath + RULES_FOLDER + "/" + RULES_FILE_IGNORE),
+				"#write file to be ignored in the build (like gitignore sintax)"
+			);
+			System.out.print("initialized\n");
+		} catch (IOException e) {
+			System.out.println("Impossible to write example hjrule folder");
+		}
+	}
 }
