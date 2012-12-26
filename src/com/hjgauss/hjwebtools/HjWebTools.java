@@ -1,7 +1,7 @@
 package com.hjgauss.hjwebtools;
 
 public class HjWebTools {
-	final static String VERSION = "0.0.0";
+	final static String VERSION = "0.1.0";
 
 	
 	public static void main(String[] args) {
