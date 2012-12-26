@@ -86,7 +86,7 @@ public class Filter {
 	}
 	
 	public Boolean isIgnored(File file){
-		String path = FileTree.pathUnixStyleFakeAbsolute(file.getPath());
+		String path = FileTree.pathUnixStyleFakeAbsolute(file);
 		
 		for (String pattern : ignore_list){
 			//System.out.println("pattern :"+pattern+" path:"+path);

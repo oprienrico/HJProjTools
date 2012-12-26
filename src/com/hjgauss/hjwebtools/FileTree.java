@@ -87,6 +87,9 @@ public class FileTree {
 		else
 			return "/"+path;
 	}
+	public static String pathUnixStyleFakeAbsolute(File file){
+		return pathUnixStyleFakeAbsolute(file.getPath());
+	}
 	
 
 }

@@ -31,15 +31,12 @@ public class HjWebTools {
 			String path = FileTree.pathUnixStyleFakeAbsolute(filePath.getPath());
 			//System.out.print("\n" + loadRulesList("test")+"\n");
 			//System.out.println("test : "+(new String("w/test/string").indexOf("/test/")));FileTree.pathUnixStyle(filePath.getPath())
-			Filter filter = new Filter();
-			filter.loadRules();
-			System.out.println("test2 : "+filter.getFileList());
+			
 			
 			WebBuild webbuild = new WebBuild();
-			//webbuild.build();
-			webbuild.clearBuild();
+			webbuild.build();
+			//webbuild.clearBuild();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
