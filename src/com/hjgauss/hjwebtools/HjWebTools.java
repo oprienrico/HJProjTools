@@ -16,8 +16,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.nbgit.util.exclude.FnMatch;
-
 
 public class HjWebTools {
 	
@@ -33,8 +31,13 @@ public class HjWebTools {
 			String path = FileTree.pathUnixStyleFakeAbsolute(filePath.getPath());
 			//System.out.print("\n" + loadRulesList("test")+"\n");
 			//System.out.println("test : "+(new String("w/test/string").indexOf("/test/")));FileTree.pathUnixStyle(filePath.getPath())
+			Filter filter = new Filter();
+			filter.loadRules();
+			System.out.println("test2 : "+filter.getFileList());
 			
-			System.out.println("test2 : "+FnMatch.fnmatch(pattern, path));
+			WebBuild webbuild = new WebBuild();
+			//webbuild.build();
+			webbuild.clearBuild();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

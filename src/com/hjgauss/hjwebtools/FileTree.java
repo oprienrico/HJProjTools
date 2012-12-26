@@ -11,25 +11,59 @@ public class FileTree {
 	}
 	
 	public static String getBaseDirAbsolutePath() throws IOException{
-		return (new File(".")).getCanonicalPath();
+		return getBaseDir().getCanonicalPath();
 	}
 	
-	public static ArrayList<File> listFilesForFolder(final File folder) {
+	public static ArrayList<File> listFilesFromFolder(final File folder) {
 		ArrayList<File> fileList = new ArrayList<File>();
 		
-	    for (final File fileEntry : folder.listFiles()) {
-	        if (fileEntry.isDirectory()) {
-	        	fileList.addAll(listFilesForFolder(fileEntry));
-	        } else {
-	            fileList.add(fileEntry);
-	        }
-	    }
+	    for (final File fileEntry : folder.listFiles())
+	    	if(!fileEntry.getPath().contains(".hjrules"))//exclude .hjrule files
+		        if (fileEntry.isDirectory())
+		        	fileList.addAll(listFilesFromFolder(fileEntry));
+		        else
+		            fileList.add(fileEntry);
+	    
 		return fileList;
 	}
 	
-	public static ArrayList<File> listFilesForFolderPath(final String folderPath) {
-		return listFilesForFolder(new File(folderPath));
+	public static ArrayList<File> listFilesFromFolderPath(final String folderPath) {
+		return listFilesFromFolder(new File(folderPath));
 	}
+	
+	public static ArrayList<File> listFilesFromBaseDir(){
+		return listFilesFromFolder(getBaseDir());
+	}
+	
+	public static boolean deleteDir(File dir) {
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i=0; i<children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+    
+        // The directory is now empty so delete it
+        return dir.delete();
+    }
+	
+	public static boolean deleteDirContent(File dir) {
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i=0; i<children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+    
+        // The directory is now empty
+        return true;
+    }
 	
 	public static String getFileExtension(final File file){
 
@@ -46,7 +80,8 @@ public class FileTree {
 		return path.replace('\\', '/');//(92, 47);
 	}
 	public static String pathUnixStyleFakeAbsolute(String path){
-		path = path.replace('\\', '/');//(92, 47);
+		path = path.replace('\\', '/');//tranform win separator to unix like
+		path = path.replace("./", "");//remove base path ./
 		if(path.startsWith("/"))
 			return path;
 		else

@@ -10,31 +10,44 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import org.nbgit.util.exclude.FnMatch;
+
+import com.hjgauss.hjwebtools.exceptions.IgnoreListNotLoaded;
+
 public class Filter {
-	final static Charset ENCODING = StandardCharsets.UTF_8;
+	final static private Charset ENCODING = StandardCharsets.UTF_8;
 	final static String RULES_FOLDER = ".hjrules";
 	final static String RULES_FILE_IGNORE = ".hjignore";
 	
+	ArrayList<String> ignore_list;
 	/**
 	 * @param args
 	 */
-	
-	public static ArrayList<String> loadIgnoreList(){
-		return loadIgnoreList("");
+	public Filter(){
+
 	}
 	
-	public static ArrayList<String> loadIgnoreList(String rulePath){
-		if(rulePath.isEmpty())
+	public void loadIgnoreList(){
+		loadIgnoreList("");
+	}
+	
+	public void loadIgnoreList(String rulePath){
+		if(rulePath == null)
 			rulePath = "";
-		
-		ArrayList<String> rules = null;
-		rules = loadRulesList(rulePath + "/" + RULES_FOLDER + "/" + RULES_FILE_IGNORE);
-		
-		return rules;
+		ignore_list = getRulesList(rulePath + RULES_FOLDER + "/" + RULES_FILE_IGNORE);
 	}
 	
-	public static ArrayList<String> loadRulesList(String rulePath){
-		if(rulePath.isEmpty())
+	public void loadRules(){
+		loadRules("");
+	}
+	
+	public void loadRules(String rulePath){
+		loadIgnoreList(rulePath);
+		System.out.println("log list:"+ignore_list);
+	}
+
+	public static ArrayList<String> getRulesList(String rulePath){
+		if(rulePath == null || rulePath.isEmpty())
 			return null;
 		
 		ArrayList<String> rules = null;
@@ -44,32 +57,45 @@ public class Filter {
 	    	rules = new ArrayList<String>();
 	    	String line = null;
 	    	while ((line = reader.readLine()) != null) {
-    			rules.add(line);
+	    		if(line.indexOf('#')>-1)
+	    			line = line.substring(0,line.indexOf('#'));//manage comments
+	    		line = line.replace(" ", "");//delete spaces
+	    		if(!line.isEmpty())
+	    			rules.add(line);
+	    			System.out.print(line);
 	    	}      
 	    } catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return rules;
 	}
 	
-
-	public static ArrayList<File> filter(){
-		ArrayList<File> tempList = null;
+	public ArrayList<File> getFileList() throws IgnoreListNotLoaded{
+		if(ignore_list == null)
+			throw new IgnoreListNotLoaded();
 		
+		ArrayList<File> tempList = FileTree.listFilesFromBaseDir();
+		for (int i = 0; i < tempList.size(); i++){
+			if(isIgnored(tempList.get(i))){
+				tempList.remove(i);
+				i--;//compensate the removal
+			}
+		}
 		return tempList;
 	}
 	
-	public static Boolean isIgnored(File file){
-		ArrayList<String> ignoredList = loadIgnoreList();
-		for (String rule : ignoredList){
-			
-				
-			
+	public Boolean isIgnored(File file){
+		String path = FileTree.pathUnixStyleFakeAbsolute(file.getPath());
+		
+		for (String pattern : ignore_list){
+			//System.out.println("pattern :"+pattern+" path:"+path);
+			if(FnMatch.fnmatch(pattern, path))
+				return true;
 		}
 		return false;
 	}
+	
 	
 	
 }
