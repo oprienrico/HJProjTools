@@ -89,6 +89,8 @@ public class Filter {
 			//System.out.println("pattern :"+pattern+" path:"+path);
 			if(FnMatch.fnmatch(pattern, path))
 				return true;
+			if(isContained(pattern, path))
+				return true;
 		}
 		return false;
 	}
@@ -126,5 +128,12 @@ public class Filter {
 		} catch (IOException e) {
 			System.out.println("Impossible to write example hjrule folder");
 		}
+	}
+	
+	public static Boolean isContained(String pattern, String path){
+		if(path.indexOf(pattern) > 0)
+			return true;
+				
+		return false;
 	}
 }

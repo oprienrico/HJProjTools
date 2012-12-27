@@ -22,14 +22,19 @@ public class HjWebTools {
 			WebBuild webbuild = new WebBuild();
 			webbuild.build();
 			break;
+		case "-cleanbuild":
+			WebBuild webbuild2 = new WebBuild();
+			webbuild2.cleanBuild();
+			break;
 		default:
 			System.out.println(
-				"HJ Web Tools v" + VERSION +
+				"HJ Web Tools v" + VERSION + "\n" +
 				"Options available:\n" +
-				"-v     : show version\n" +
-				"-init  : init .hjrule\n" +
-				"-finit : force init .hjrule\n" +
-				"-build : export build"
+				"-v          : show version\n" +
+				"-init       : init .hjrule\n" +
+				"-finit      : force init .hjrule\n" +
+				"-build      : export build\n" + 
+				"-cleanbuild : clean build"
 			);
 		}
 	}
