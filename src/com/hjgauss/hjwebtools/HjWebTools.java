@@ -1,10 +1,10 @@
 package com.hjgauss.hjwebtools;
 
 public class HjWebTools {
-	final static String VERSION = "0.1.0";
+	final static String VERSION = "0.1.1";
 
 	public static void main(String[] args) {
-		String command = "-init";
+		String command = "";
 		if(args.length>0)
 			command = args[0];
 		
