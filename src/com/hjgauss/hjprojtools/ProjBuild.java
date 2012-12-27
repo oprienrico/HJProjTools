@@ -1,4 +1,4 @@
-package com.hjgauss.hjwebtools;
+package com.hjgauss.hjprojtools;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import org.apache.commons.io.FileUtils;
 
-import com.hjgauss.hjwebtools.exceptions.IgnoreListNotLoaded;
+import com.hjgauss.hjprojtools.exceptions.IgnoreListNotLoaded;
 
-public class WebBuild {
+public class ProjBuild {
 	final String BUILD_PATH = "../build";
 	
 	public void cleanBuild(){

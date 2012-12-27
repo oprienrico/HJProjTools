@@ -1,4 +1,4 @@
-package com.hjgauss.hjwebtools;
+package com.hjgauss.hjprojtools;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import org.apache.commons.io.FileUtils;
 import org.nbgit.util.exclude.FnMatch;
 
-import com.hjgauss.hjwebtools.exceptions.IgnoreListNotLoaded;
+import com.hjgauss.hjprojtools.exceptions.IgnoreListNotLoaded;
 
 public class Filter {
 	final static private Charset ENCODING = StandardCharsets.UTF_8;

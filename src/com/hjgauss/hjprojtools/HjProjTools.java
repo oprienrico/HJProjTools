@@ -1,6 +1,6 @@
-package com.hjgauss.hjwebtools;
+package com.hjgauss.hjprojtools;
 
-public class HjWebTools {
+public class HjProjTools {
 	final static String VERSION = "0.1.1";
 
 	public static void main(String[] args) {
@@ -10,7 +10,7 @@ public class HjWebTools {
 		
 		switch (command) {
 		case "-v":
-			System.out.println("HJWebTools v"+VERSION);
+			System.out.println("HJ Project Tools v"+VERSION);
 			break;
 		case "-init":
 			Filter.createExampleRuleFolder();
@@ -19,16 +19,16 @@ public class HjWebTools {
 			Filter.createExampleRuleFolder(true);
 			break;
 		case "-build":
-			WebBuild webbuild = new WebBuild();
+			ProjBuild webbuild = new ProjBuild();
 			webbuild.build();
 			break;
 		case "-cleanbuild":
-			WebBuild webbuild2 = new WebBuild();
+			ProjBuild webbuild2 = new ProjBuild();
 			webbuild2.cleanBuild();
 			break;
 		default:
 			System.out.println(
-				"HJ Web Tools v" + VERSION + "\n" +
+				"HJ Project Tools v" + VERSION + "\n" +
 				"Options available:\n" +
 				"-v          : show version\n" +
 				"-init       : init .hjrule\n" +

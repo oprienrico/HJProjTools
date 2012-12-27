@@ -1,4 +1,4 @@
-package com.hjgauss.hjwebtools.exceptions;
+package com.hjgauss.hjprojtools.exceptions;
 
 public class IgnoreListNotLoaded extends Exception {
 
