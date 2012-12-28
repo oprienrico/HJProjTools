@@ -1,10 +1,10 @@
 package com.hjgauss.hjprojtools;
 
 public class HjProjTools {
-	final static String VERSION = "0.1.2";
+	final static String VERSION = "0.1.3";
 
 	public static void main(String[] args) {
-		String command = "-build";
+		String command = "";
 		if(args.length>0)
 			command = args[0];
 		
