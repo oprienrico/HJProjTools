@@ -4,7 +4,7 @@ public class HjProjTools {
 	final static String VERSION = "0.1.2";
 
 	public static void main(String[] args) {
-		String command = "";
+		String command = "-build";
 		if(args.length>0)
 			command = args[0];
 		

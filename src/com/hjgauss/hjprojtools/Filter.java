@@ -131,9 +131,14 @@ public class Filter {
 	}
 	
 	public static Boolean isContained(String pattern, String path){
-		if(path.indexOf(pattern) > 0)
-			return true;
-				
+		path = path + "#";//add special (unused) char to delimit the path and make a better match with the pattern
+		if(!pattern.startsWith("/"))
+			if(path.indexOf("/" + pattern + "#") > -1)
+				return true;
+		else
+			if(path.indexOf(pattern) == 0)
+				return true;
+			
 		return false;
 	}
 }
