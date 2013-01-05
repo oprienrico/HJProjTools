@@ -86,10 +86,14 @@ public class Filter {
 		String path = FileTree.pathUnixStyleFakeAbsolute(file);
 		
 		for (String pattern : ignore_list){
+			//prepare pattern
+			if(!pattern.startsWith("/"))
+				pattern = "*/" + pattern;
+			if(pattern.endsWith("/"))
+				pattern = pattern + "*";
+			
 			//System.out.println("pattern :"+pattern+" path:"+path);
 			if(FnMatch.fnmatch(pattern, path))
-				return true;
-			if(isContained(pattern, path))
 				return true;
 		}
 		return false;
@@ -124,21 +128,10 @@ public class Filter {
 				new File(rulePath + RULES_FOLDER + "/" + RULES_FILE_IGNORE),
 				"#write file to be ignored in the build (like gitignore sintax)"
 			);
-			System.out.print("initialized\n");
+			System.out.print(" initialized\n");
 		} catch (IOException e) {
-			System.out.println("Impossible to write example hjrule folder");
+			System.out.println("\nImpossible to write example hjrule folder\n");
 		}
 	}
 	
-	public static Boolean isContained(String pattern, String path){
-		path = path + "#";//add special (unused) char to delimit the path and make a better match with the pattern
-		if(!pattern.startsWith("/"))
-			if(path.indexOf("/" + pattern + "#") > -1)
-				return true;
-		else
-			if(path.indexOf(pattern) == 0)
-				return true;
-			
-		return false;
-	}
 }
